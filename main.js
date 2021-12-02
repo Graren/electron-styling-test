@@ -1,4 +1,11 @@
-const { app, BrowserWindow } = require("electron");
+const {
+  app,
+  BrowserWindow,
+  ipcMain,
+  nativeTheme,
+  ipcRenderer,
+} = require("electron");
+const path = require("path");
 
 function createWindow() {
   // Create the browser window.
@@ -6,15 +13,33 @@ function createWindow() {
     width: 800,
     height: 600,
     webPreferences: {
-      nodeIntegration: true,
+      devTools: true,
+      nodeIntegration: false,
+      nodeIntegrationInWorker: false,
+      nodeIntegrationInSubFrames: false,
+      contextIsolation: true,
+      enableRemoteModule: false,
+      preload: path.join(__dirname, "electron", "preload.js"),
+      /* eng-disable PRELOAD_JS_CHECK */
+      disableBlinkFeatures: "Auxclick",
     },
   });
 
   // Load the index.html of the app.
-  win.loadFile("src/index.html");
+  win.loadFile("public/index.html");
 
   // Open the DevTools.
   win.webContents.openDevTools();
+
+  ipcMain.handle("dark-mode:toggle", (evt, option) => {
+    nativeTheme.themeSource = option;
+
+    const p = path.join(__dirname, "assets", `${option}.css`);
+    return {
+      option,
+      path: p,
+    };
+  });
 }
 
 // This method will be called when Electron has finished

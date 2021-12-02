@@ -2,10 +2,12 @@
   "name": "electron-styling",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "test": "npx mocha tests/**/*.test.js",
-    "coverage": "nyc mocha tests/**/*.test.js -t 5000"
+    "coverage": "nyc mocha tests/**/*.test.js -t 5000",
+    "start": "electron .",
+    "pack": "npx webpack"
   },
   "author": "",
   "license": "ISC",
@@ -13,11 +15,20 @@
     "electron": "^16.0.3"
   },
   "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
+    "@vercel/webpack-asset-relocator-loader": "^1.7.0",
+    "babel-loader": "^8.2.3",
+    "css-loader": "^6.5.1",
     "eslint": "^8.3.0",
     "eslint-config-prettier": "^8.3.0",
     "expect.js": "^0.3.1",
     "mocha": "^9.1.3",
+    "node-loader": "^2.0.0",
     "nyc": "^15.1.0",
-    "prettier": "2.5.0"
+    "prettier": "2.5.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.64.4",
+    "webpack-cli": "^4.9.1"
   }
 }
